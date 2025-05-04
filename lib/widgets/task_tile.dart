@@ -15,14 +15,33 @@ class TaskTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Checkbox(value: task.done, onChanged: (_) => onToggle()),
+      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      leading: Container(
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: task.done ? Colors.green.withOpacity(0.2) : Colors.white.withOpacity(0.2),
+        ),
+        child: IconButton(
+          icon: Icon(
+            task.done ? Icons.check_circle : Icons.circle_outlined,
+            color: task.done ? Colors.green : Colors.white,
+          ),
+          onPressed: onToggle,
+        ),
+      ),
       title: Text(
         task.title,
         style: TextStyle(
+          fontSize: 16,
           decoration: task.done ? TextDecoration.lineThrough : null,
+          color: task.done ? Colors.grey[300] : Colors.white,
         ),
       ),
-      trailing: IconButton(icon: Icon(Icons.delete), onPressed: onDelete),
+      trailing: IconButton(
+        icon: Icon(Icons.delete_outline, color: Colors.white70),
+        onPressed: onDelete,
+      ),
     );
   }
 }
+

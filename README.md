@@ -1,17 +1,31 @@
-# taller2
+# App de Gestión de Tareas
 
-A new Flutter project.
+Una aplicación móvil desarrollada con Flutter para la gestión eficiente de tareas diarias.
+
+## Autor
+- Javier López
+
+## Descripción
+Esta aplicación permite a los usuarios:
+- Crear y gestionar tareas
+- Marcar tareas como completadas
+- Organizar tareas por prioridad
+- Mantener un registro de actividades pendientes
+
+## Tecnologías Utilizadas
+- Flutter
+- Dart
+- Material Design
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Este proyecto es un punto de partida para una aplicación Flutter.
 
-A few resources to get you started if this is your first Flutter project:
+Algunos recursos para comenzar si este es tu primer proyecto Flutter:
 
 - [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
 - [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-# appdetareas
+Para obtener ayuda sobre el desarrollo con Flutter, consulta la
+[documentación en línea](https://docs.flutter.dev/), que ofrece tutoriales,
+ejemplos, guías de desarrollo móvil y una referencia completa de la API.
