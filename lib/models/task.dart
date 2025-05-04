@@ -2,8 +2,13 @@
 class Task {
   String title;  // Título de la tarea
   bool done;     // Estado de la tarea (completada o no)
+  int order;     // Orden de la tarea en la lista
 
-  Task({required this.title, this.done = false});
+  Task({
+    required this.title, 
+    this.done = false,
+    this.order = 0,  // Por defecto, orden 0
+  });
 
   // Método para convertir un objeto JSON a una tarea
   // Se usa cuando se cargan las tareas desde el almacenamiento
@@ -11,6 +16,7 @@ class Task {
     return Task(
       title: json['title'],  // Extrae el título del JSON
       done: json['done'],    // Extrae el estado del JSON
+      order: json['order'] ?? 0,  // Extrae el orden del JSON, por defecto 0
     );
   }
 
@@ -20,6 +26,7 @@ class Task {
     return {
       'title': title,  // Guarda el título en el JSON
       'done': done,    // Guarda el estado en el JSON
+      'order': order,  // Guarda el orden en el JSON
     };
   }
 }

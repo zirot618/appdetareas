@@ -29,6 +29,11 @@ class _HomeScreenState extends State<HomeScreen> {
     final loaded = await _taskService.loadTasks();
     setState(() {
       _tasks = loaded;
+      // Asegura que todas las tareas tengan un orden válido
+      for (var i = 0; i < _tasks.length; i++) {
+        _tasks[i].order = i;
+      }
+      _sortTasks();
       _isLoading = false;
     });
   }
@@ -42,7 +47,10 @@ class _HomeScreenState extends State<HomeScreen> {
   void _addTask(String title) {
     if (title.trim().isEmpty) return;
     setState(() {
-      _tasks.add(Task(title: title));
+      _tasks.add(Task(
+        title: title,
+        order: _tasks.length, // Asigna el siguiente orden disponible
+      ));
       _sortTasks();
       _controller.clear();
     });
@@ -58,6 +66,42 @@ class _HomeScreenState extends State<HomeScreen> {
     });
     // Guarda las tareas después de cambiar el estado
     _saveTasks();
+  }
+
+  // Método para mover una tarea hacia arriba
+  void _moveTaskUp(int index) {
+    if (index > 0 && !_tasks[index].done) {
+      setState(() {
+        // Intercambia las tareas directamente
+        final task = _tasks[index];
+        _tasks[index] = _tasks[index - 1];
+        _tasks[index - 1] = task;
+        
+        // Actualiza los órdenes
+        for (var i = 0; i < _tasks.length; i++) {
+          _tasks[i].order = i;
+        }
+      });
+      _saveTasks();
+    }
+  }
+
+  // Método para mover una tarea hacia abajo
+  void _moveTaskDown(int index) {
+    if (index < _tasks.length - 1 && !_tasks[index].done) {
+      setState(() {
+        // Intercambia las tareas directamente
+        final task = _tasks[index];
+        _tasks[index] = _tasks[index + 1];
+        _tasks[index + 1] = task;
+        
+        // Actualiza los órdenes
+        for (var i = 0; i < _tasks.length; i++) {
+          _tasks[i].order = i;
+        }
+      });
+      _saveTasks();
+    }
   }
 
   // Método para eliminar una tarea
@@ -77,6 +121,10 @@ class _HomeScreenState extends State<HomeScreen> {
             onPressed: () {
               setState(() {
                 _tasks.removeAt(index);
+                // Reasigna los órdenes después de eliminar
+                for (var i = 0; i < _tasks.length; i++) {
+                  _tasks[i].order = i;
+                }
               });
               // Guarda las tareas después de eliminar una
               _saveTasks();
@@ -89,11 +137,15 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // Método para ordenar las tareas (completadas al final)
+  // Método para ordenar las tareas (por estado y orden)
   void _sortTasks() {
     _tasks.sort((a, b) {
-      if (a.done == b.done) return 0;
-      return a.done ? 1 : -1;
+      // Primero ordena por estado (completadas al final)
+      if (a.done != b.done) {
+        return a.done ? 1 : -1;
+      }
+      // Luego ordena por el orden asignado
+      return a.order.compareTo(b.order);
     });
   }
 
@@ -190,7 +242,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         itemBuilder: (context, index) => Card(
                           elevation: 2,
                           margin: EdgeInsets.only(bottom: 8),
-                          color: Theme.of(context).primaryColor,
+                          color: _tasks[index].done 
+                              ? Colors.indigo[350]  // Morado más claro para tareas completadas
+                              : Theme.of(context).primaryColor,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
@@ -198,6 +252,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             task: _tasks[index],
                             onToggle: () => _toggleTask(index),
                             onDelete: () => _deleteTask(index),
+                            onMoveUp: () => _moveTaskUp(index),
+                            onMoveDown: () => _moveTaskDown(index),
                           ),
                         ),
                       ),

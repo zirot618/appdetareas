@@ -11,6 +11,18 @@ Esta aplicación permite a los usuarios:
 - Marcar tareas como completadas
 - Organizar tareas por prioridad
 - Mantener un registro de actividades pendientes
+- Acceso rápido a herramientas mediante un botón flotante de acción
+
+### Características de la Interfaz
+- Botón flotante de acción (FAB) para acceso rápido a herramientas
+- Interfaz intuitiva y fácil de usar
+- Diseño moderno y responsive
+- Navegación fluida entre secciones
+- Sistema de flechas de desplazamiento inteligente:
+  - Flecha hacia arriba: desplaza a tareas de mayor prioridad
+  - Flecha hacia abajo: desplaza a tareas de menor prioridad
+  - Indicador visual de nivel de prioridad
+  - Desplazamiento suave y animado
 
 ## Tecnologías Utilizadas
 - Flutter

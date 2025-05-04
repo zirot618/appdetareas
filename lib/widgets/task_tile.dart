@@ -5,11 +5,15 @@ class TaskTile extends StatelessWidget {
   final Task task;
   final VoidCallback onToggle;
   final VoidCallback onDelete;
+  final VoidCallback onMoveUp;
+  final VoidCallback onMoveDown;
 
   TaskTile({
     required this.task,
     required this.onToggle,
     required this.onDelete,
+    required this.onMoveUp,
+    required this.onMoveDown,
   });
 
   @override
@@ -37,9 +41,24 @@ class TaskTile extends StatelessWidget {
           color: task.done ? Colors.grey[300] : Colors.white,
         ),
       ),
-      trailing: IconButton(
-        icon: Icon(Icons.delete_outline, color: Colors.white70),
-        onPressed: onDelete,
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (!task.done) ...[
+            IconButton(
+              icon: Icon(Icons.arrow_upward, color: Colors.white70),
+              onPressed: onMoveUp,
+            ),
+            IconButton(
+              icon: Icon(Icons.arrow_downward, color: Colors.white70),
+              onPressed: onMoveDown,
+            ),
+          ],
+          IconButton(
+            icon: Icon(Icons.delete_outline, color: Colors.white70),
+            onPressed: onDelete,
+          ),
+        ],
       ),
     );
   }
